@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-docker build -t azwickey/fortune-demo .
-docker push azwickey/fortune-demo:latest
+docker build -t howardyoo/fortune-demo .
+docker push howardyoo/fortune-demo:latest
