@@ -39,7 +39,7 @@ metadata:
   name: fortune-app
   namespace: fortune
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: fortune-app
@@ -61,7 +61,7 @@ spec:
           protocol: TCP
         env:
         - name: SPRING_REDIS_HOST
-          value: "redis.default.svc.cluster.local"
+          value: "redis.fortune.svc.cluster.local"
 ---
 apiVersion: apps/v1
 kind: StatefulSet
