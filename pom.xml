@@ -25,15 +25,20 @@
 	</properties>
 
 	<dependencies>
+		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		-->
+
 		<!-- Micrometer Prometheus registry  -->
+		<!--
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -42,6 +47,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cloud-connectors</artifactId>
@@ -51,6 +57,7 @@
 			<artifactId>spring-cloud-starter-kubernetes-config</artifactId>
 			<version>1.0.3.RELEASE</version>
 		</dependency>
+		-->
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -58,11 +65,38 @@
 			<version>2.0</version>
 		</dependency>
 
+		<!-- for testing on spring autoconfigure -->
+
+		<!-- Wavefront SpringBoot Autoconfigure (remove comment to enable it)
+		<dependency>
+			<groupId>com.wavefront</groupId>
+			<artifactId>wavefront-spring-boot-autoconfigure</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		-->
+
+		<!-- autoconfigure -->
+
+		<!-- Jackson JSON Processor -->
+		<!-- jackson is not necessary
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-wavefront</artifactId>
+			<version>LATEST</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

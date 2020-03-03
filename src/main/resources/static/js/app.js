@@ -7,16 +7,19 @@ function loadOne() {
            var container = $('#fortune');
            console.log("Adding Fortune: " + data);
            if(data) {
-             container.append("<p>" + data.text + "</p>");
+             container.append("<p>&ldquo;" + data.text + "&rdquo;</p>");
            } else {
-             container.append("<p>You future is murky...</p>");
+             container.append("<p>&ldquo;If you want the rainbow, you have to tolerate the rain.&rdquo;</p>");
            }
          },
          error: function () {
            var container = $('#fortune');
-           container.append("<p>You future is murky...</p>");
+           container.append("<p>&ldquo;Don't worry about money.&rdquo;</p>");
         }
     });
+
+  // getting wf info
+  getWfInfo();
 }
 
 function loadAll() {
@@ -31,12 +34,61 @@ function loadAll() {
         if(data) {
             $.each(data, function(index, value) {
                 console.log("Adding fortune " + index);
-                container.append("<p>" + value.text + "</p><br>");
+                container.append("<p>&ldquo;" + value.text + "&rdquo;</p>");
             });
         } else {
             container.append("<p>-- Empty --</p>");
         }
     });
+
+    // getting wf info
+    getWfInfo();
+}
+
+// retrieve wavefront info (if exists)
+function getWfInfo() {
+  console.log("Getting wavefront info");
+  $.ajax({
+    url: "/wf-info",
+    success: function (data) {
+      var container = $('#wavefront-info');
+      // if one time link exists
+      var clicked = data["oneTimeClicked"];
+      console.log("clicked: " + clicked);
+      var buff = "";
+      if(clicked == false) {
+        // print out greeting and one time link
+        var link = data["oneTimeLink"];
+        buff += "Your Wavefront Monitoring is ready. ";
+        buff += "<a href=\"" + link + "\" target=\"_blank\" onclick='enableWavefront()'>Please activate your Wavefront Account</a> now!";
+      } else {
+        // get the url
+        var link = data["url"];
+        buff += "Monitor your application using Wavefront at ";
+        buff += "<a href=\"" + link + "\" target=\"_blank\">" + link + "</a>";
+        buff += " | ";
+        buff += "<a href=\"wavefront.html\" target=\"_blank\">Access Wavefront Charts</a>";
+      }
+      container.html(buff);
+    },
+    error: function () {
+    }
+  });
+}
+
+function enableWavefront() {
+  console.log("Enabling wavefront");
+  $.ajax({
+    url: "/wf-enable",
+    success: function (data) {
+      console.log("enabling wavefront: " + data);
+      // refresh wf info
+      getWfInfo();
+    },
+    error: function() {
+      console.log("WF enablement returned error.");
+    }
+  });
 }
 
 function handle(event) {

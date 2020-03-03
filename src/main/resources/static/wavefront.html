@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <title>Fortune Teller</title>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/> -->
+            <link href="css/bootstrap-dark.min.css" rel="stylesheet"/>
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+            <script src="js/app.js"></script>
+            <style type="text/css">
+                #fortune_ball {
+                    display:inline-block;
+                    height: 4em;
+                    margin: 0px;
+                    padding: 0px;
+                    vertical-align: middle;
+                }
+                h1#title {
+                    display:inline-block;
+                    line-height:1em;
+                    margin: 0px;
+                    padding: 0px;
+                    vertical-align: middle;
+                }
+
+                #fortune {
+                    font-family: Times New Roman;
+                    font-size: 2em;
+                    line-height: 2em;
+                }
+            </style>
+            <script type="text/javascript">
+                // main wf host (for creating links)
+                var wf_host = "";
+                var wf_source = "";
+                var wf_token = "";
+
+                function init() {
+                  var container = $('#wf_links');
+                  if (container) {
+                    getWfInfo();
+                  }
+                }
+
+                // retrieve wavefront info, and this will spin off
+                // other functions after setting some global values.
+                function getWfInfo() {
+                  console.log("Getting wavefront info");
+                  $.ajax({
+                    url: "/wf-info",
+                    success: function (data) {
+                      wf_host = data["url"];
+                      wf_source = data["source"];
+                      wf_token = data["token"];
+                      setupLink3();
+                      setupLink4();
+                      setupLink1();
+                      setupLink2();
+                    },
+                    error: function () {
+                    }
+                  });
+                }
+
+                // function to setup links to display number of metrics currently
+                // being displayed for the given source.
+                function setupLink1() {
+                  var buff = "";
+                  buff += "<p>";
+                  buff += "<a href=\"";
+                  buff += wf_host;
+                  buff += "/charts#_v01(c:(cs:(customTags:!(),fixedLegendDisplayStats:!(CURRENT),fixedLegendEnabled:!f,fixedLegendFilterField:CURRENT,fixedLegendFilterLimit:5,fixedLegendFilterSort:TOP,fixedLegendPosition:RIGHT,fixedLegendUseRawStats:!f,lineType:linear,numTags:4,singleStat:(sparklineDisplaySubLabel:'Metrics%20reporting'),sparklineDecimalPrecision:0,sparklineDisplayColor:'',sparklineDisplayFontSize:'100',sparklineDisplayHorizontalPosition:MIDDLE,sparklineDisplayValueType:VALUE,sparklineSize:BACKGROUND,sparklineValueColorMapApplyTo:TEXT,sparklineValueTextMapText:!('new%20highest'),tagMode:all,type:sparkline,windowing:full,y0ScaleDecimal:!t,y0ScaleSIBy1024:!f,y0UnitAutoscaling:!f,y1ScaleSIBy1024:!f,y1UnitAutoscaling:!f,y1Units:''),id:chart,n:number-of-metrics,s:!((e:'',n:Query,q:'count(ts(%22*%22,%20source=%22";
+                  buff += wf_source;
+                  buff += "%22))',qb:'%7B%22_v%22:1,%22metric%22:%22ts(%5C%22app-agent.jvm.uptime%5C%22)%22,%22filters%22:%5B%5B%5D,%22and%22%5D,%22functions%22:%5B%5D%7D',qbe:!f)),u:''),g:(c:off,d:600,ls:!t,s:1583125557,w:'10m'))";
+                  buff += "\" target=_blank>";
+                  buff += "Wavefront, show me how many metrics are currently being reported.";
+                  buff += "</a>"
+                  buff += "</p>"
+                  var container = $('#wf_links');
+                  container.append(buff)
+                }
+
+                // similar to link1 but this shows the actual list of
+                // metrics reporting to the service.
+                function setupLink2() {
+                  var buff = "";
+                  buff += "<p>";
+                  buff += "<a href=\"";
+                  buff += wf_host;
+                  buff += "/charts#_v01(c:(cs:(customTags:!(),fixedLegendDisplayStats:!(CURRENT),fixedLegendEnabled:!f,fixedLegendFilterField:CURRENT,fixedLegendFilterLimit:5,fixedLegendFilterSort:TOP,fixedLegendPosition:RIGHT,fixedLegendUseRawStats:!f,groupBySource:!f,lineType:linear,numTags:4,showHosts:!t,showLabels:!t,showRawValues:!f,sortValuesDescending:!t,tagMode:all,type:table,windowing:full,y0ScaleSIBy1024:!f,y0UnitAutoscaling:!f,y1ScaleSIBy1024:!f,y1UnitAutoscaling:!f,y1Units:''),id:new-chart,n:list-of-metrics,s:!((e:'',n:A,q:'count(ts(%22*%22,%20source=%22";
+                  buff += wf_source;
+                  buff += "%22),%20metrics)',qb:'%7B%22metric%22:%22%22,%22filters%22:%5B%5B%5D,%22and%22%5D,%22functions%22:%5B%5D%7D',qbe:!f)),smp:off),g:(c:off,d:3600,ls:!t,s:1583125588,w:'1h'))";
+                  buff += "\" target=_blank>";
+                  buff += "Wavefront, show me the list of metrics are currently being reported.";
+                  buff += "</a>"
+                  buff += "</p>"
+                  var container = $('#wf_links');
+                  container.append(buff)
+                }
+
+                // link to applications page
+                function setupLink3() {
+                  var buff = "";
+                  buff += "<p>";
+                  buff += "<a href=\"";
+                  buff += wf_host;
+                  buff += "/tracing/applications#_v01(g:(c:off,d:3600,ls:!t,s:1583122107,w:'1h'))";
+                  buff += "\" target=_blank>";
+                  buff += "Show me the Applications page.";
+                  buff += "</a>"
+                  buff += "</p>"
+                  var container = $('#wf_links');
+                  container.append(buff)
+                }
+
+                // link to usage dashboard
+                function setupLink4() {
+                  var buff = "";
+                  buff += "<p>";
+                  buff += "<a href=\"";
+                  buff += wf_host;
+                  buff += "/dashboards/integration-system#_v01(g:(c:off,d:3600,ls:!t,s:1583122107,w:'1h'))";
+                  buff += "\" target=_blank>";
+                  buff += "Show me the Wavefront Usage Dashboard.";
+                  buff += "</a>"
+                  buff += "</p>"
+                  var container = $('#wf_links');
+                  container.append(buff)
+                }
+            </script>
+        </head>
+      <body onload="init()">
+      <div class="jumbotron container">
+          <h1 id="title">Wavefront</h1>
+          <hr />
+          <p>Wavefront Page is here to help you get some charts related to your application easily.</p>
+          <div class="container" id="wf_links">
+          </div>
+      </div>
+      </body>
+    </html>

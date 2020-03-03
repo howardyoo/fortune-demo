@@ -20,7 +20,6 @@ public class Fortune {
         this.text = text;
     }
 
-
     public Long getId() {
         return id;
     }

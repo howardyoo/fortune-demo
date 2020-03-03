@@ -66,7 +66,7 @@ public class BackendController {
         return Collections.unmodifiableList(fortunes);
     }
 
-    @RequestMapping(value = "/clear", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/clear", method = RequestMethod.GET)
     @ResponseBody
     @CrossOrigin
     public List<Fortune> clear() {
