@@ -28,3 +28,4 @@ target
 ci/credentials.yml
 *.iml
 tracing/tracer.properties
+src/main/resources/wavefront.properties
