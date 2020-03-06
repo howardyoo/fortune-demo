@@ -56,18 +56,24 @@ function getWfInfo() {
       var clicked = data["oneTimeClicked"];
       console.log("clicked: " + clicked);
       var buff = "";
-      if(clicked == false) {
+      if (clicked == false) {
         // print out greeting and one time link
         var link = data["oneTimeLink"];
-        buff += "Your Wavefront Monitoring is ready. ";
-        buff += "<a href=\"" + link + "\" target=\"_blank\" onclick='enableWavefront()'>Please activate your Wavefront Account</a> now!";
+        if (link) {
+          buff += "Your Wavefront Monitoring is ready. ";
+          buff +=
+              "<a href=\"" + link
+              + "\" target=\"_blank\" onclick='enableWavefront()'>Please activate your Wavefront Account</a> now!";
+        }
       } else {
         // get the url
         var link = data["url"];
-        buff += "Monitor your application using Wavefront at ";
-        buff += "<a href=\"" + link + "\" target=\"_blank\">" + link + "</a>";
-        buff += " | ";
-        buff += "<a href=\"wavefront.html\" target=\"_blank\">Access Wavefront Charts</a>";
+        if(link) {
+          buff += "Monitor your application using Wavefront at ";
+          buff += "<a href=\"" + link + "\" target=\"_blank\">" + link + "</a>";
+          buff += " | ";
+          buff += "<a href=\"wavefront.html\" target=\"_blank\">Access Wavefront Charts</a>";
+        }
       }
       container.html(buff);
     },
